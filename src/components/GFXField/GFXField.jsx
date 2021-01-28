@@ -5,14 +5,14 @@ const GFXField = withStyles({
   root: {
     "& label.MuiFormLabel-root": {
       color: "white",
-      fontFamily: "Futura",
+      fontFamily: "Chakra Petch",
     },
     "& label.Mui-focused": {
       color: "#f5af19",
     },
     "& .MuiInputBase-input": {
       color: "white",
-      fontFamily: "Futura",
+      fontFamily: "Chakra Petch",
     },
     "& .MuiInput-underline": {
       "&:before": {

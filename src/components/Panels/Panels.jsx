@@ -21,19 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Panels = (props) => {
   const cfx = useStyles();
-  const [entries, setEntries] = useState([
-    { id: 1, key: 1, name: "SS", color: "#c07fc0" },
-    { id: 2, key: 2, name: "S", color: "#80ff80" },
-    { id: 3, key: 3, name: "A", color: "#c1fc83" },
-    { id: 4, key: 4, name: "B", color: "#ffff80" },
-    { id: 5, key: 5, name: "C", color: "#ffdf7e" },
-    { id: 6, key: 6, name: "D", color: "#ffbf7e" },
-    { id: 7, key: 7, name: "E", color: "#ff7f7f" },
-    { id: 8, key: 8, name: "F", color: "#cfcfcf" },
-  ]);
   return (
     <Grid container direction="column" className={cfx.test}>
-      {entries.map((item) => (
+      {props.entries.map((item, key) => (
         <Grid item className={cfx.layout}>
           <Panel
             id={item.id}
@@ -41,6 +31,9 @@ const Panels = (props) => {
             name={item.name}
             color={item.color}
             handleModal={props.handleModal}
+            pool={item.pool}
+            clear={item.clear}
+            handlerChange={props.handlerChange}
           />
         </Grid>
       ))}

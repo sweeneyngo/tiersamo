@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
-import { Grid, Paper } from "@material-ui/core";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   ghost: {
@@ -23,16 +23,14 @@ const useStyles = makeStyles((theme) => ({
   flexEntries: {
     width: "100%",
     flexGrow: 1,
-
   },
 }));
 
 const Entries = (props) => {
   const cfx = useStyles();
-  const [state, setState] = useState([
-    { id: 1, src: "./images/icon_oniwaka03.png", name: "oniwaka3" },
-    { id: 2, src: "./images/icon_shuten01.png", name: "shuten1" },
-  ]);
+  const [pool, setPool] = useState(props.pool);
+
+  props.clear && setPool([]);
 
   return (
     <div className={cfx.flexEntries}>
@@ -43,13 +41,14 @@ const Entries = (props) => {
         animation={100}
         delayOnTouchStart={true}
         delay={2}
-        list={state}
+        list={pool}
         ghostClass={cfx.ghost}
         className={cfx.flexbox}
-        setList={setState}
+        setList={setPool}
+        onSort={() => props.handlerChange({ pool: pool, id: props.id })}
         emptyInsertThreshold={5}
       >
-        {state.map((item) => (
+        {pool.map((item) => (
           <Grid item>
             <img
               key={item.id}

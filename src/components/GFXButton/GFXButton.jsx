@@ -3,12 +3,12 @@ import { Button } from "@material-ui/core";
 
 const GFXButton = withStyles({
   root: {
-    fontSize: 12,
-    padding: "1rem 5rem",
+    fontSize: 10,
+    padding: "15px 5rem",
     border: "1px solid",
     backgroundColor: "#1F1B24",
     borderColor: "#f5af19",
-    fontFamily: "Futura",
+    fontFamily: "Chakra Petch",
     color: "#f5af19",
     borderRadius: "10rem",
     "&:hover": {

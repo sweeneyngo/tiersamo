@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import Panels from "../../components/Panels/Panels";
-import OptionsForm from "../../components/OptionsForm/OptionsForm";
+import GFXModal from "../../components/GFXModal/GFXModal";
 
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Modal,
-  Backdrop,
-  Fade,
-} from "@material-ui/core";
+import { Grid, Paper, Typography } from "@material-ui/core";
+import Panel from "../../components/Panel/Panel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,9 +48,12 @@ const Home = (props) => {
 
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(-1);
+  const [clear, setClear] = useState(-1);
 
   const handleModal = (id) => {
     setIndex(id);
+    console.log(id);
+    console.log("Index:" + index);
     setOpen(true);
   };
 
@@ -64,34 +61,240 @@ const Home = (props) => {
     setOpen(false);
   };
 
+  const handleErase = () => {
+    alert("Erasing: " + index);
+    setEntries(entries.filter((entry) => entry.id !== index));
+    setOpen(false);
+  };
+
+  const handleAdd = (pos) => {
+    alert("Add!" + pos);
+    setOpen(false);
+  };
+
+  const handleClear = () => {
+    alert("Clear");
+    setEntries(
+      entries.map((entry) =>
+        entry.id === index ? { ...entry, clear: true } : entry
+      )
+    );
+  };
+
+  const history = { previous: -1, pastEntries: [] };
+  const handlerChange = ({ pool, id }) => {
+    if (id === history.previous) return;
+    history.pastEntries.push(history.previous);
+    history.previous = id;
+    setEntries(
+      entries.map((entry) =>
+        entry.id === id ? { ...entry, pool: pool } : entry
+      )
+    );
+    console.log("Pool: " + JSON.stringify(pool));
+    console.log("ID: " + id);
+    console.log(entries.map((entry) => entry.pool));
+  };
+
+  const [entries, setEntries] = useState([
+    {
+      id: 1,
+      key: 1,
+      name: "SS",
+      color: "#c07fc0",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+    {
+      id: 2,
+      key: 2,
+      name: "S",
+      color: "#80ff80",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+    {
+      id: 3,
+      key: 3,
+      name: "A",
+      color: "#c1fc83",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+    {
+      id: 4,
+      key: 4,
+      name: "B",
+      color: "#ffff80",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+    {
+      id: 5,
+      key: 5,
+      name: "C",
+      color: "#ffdf7e",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+    {
+      id: 6,
+      key: 6,
+      name: "D",
+      color: "#ffbf7e",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+    {
+      id: 7,
+      key: 7,
+      name: "E",
+      color: "#ff7f7f",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+    {
+      id: 8,
+      key: 8,
+      name: "F",
+      color: "#cfcfcf",
+      clear: false,
+      pool: [
+        {
+          id: 1,
+          src: "./images/icon_oniwaka03.png",
+          name: "oniwaka3",
+          chosen: false,
+          selected: false,
+        },
+        {
+          id: 2,
+          src: "./images/icon_shuten01.png",
+          name: "shuten1",
+          chosen: false,
+          selected: false,
+        },
+      ],
+    },
+  ]);
+
   return (
     <React.Fragment>
       <div className={cfx.root}>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={cfx.modal}
+        <GFXModal
           open={open}
           onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <div className={cfx.paper}>
-              <h2 id="transition-modal-title">Background Color</h2>
-              <h2 id="transition-modal-title2">Label</h2>
-              <h2 id="transition-modal-button1">Delete</h2>
-              <h2 id="transition-modal-button1">Clear</h2>
-              <h2 id="transition-modal-button1">Add Row Above</h2>
-              <h2 id="transition-modal-button1">Add Row Below</h2>
-              <p id="transition-modal-description">{index}</p>
-              <OptionsForm />
-            </div>
-          </Fade>
-        </Modal>
+          onErase={handleErase}
+          onClear={handleClear}
+          onAdd={handleAdd}
+          index={index}
+        />
+
         <Grid container spacing={3}>
           <Grid container className={cfx.header} spacing={2}>
             <Paper className={cfx.hpaper}>
@@ -108,7 +311,11 @@ const Home = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Panels handleModal={handleModal} />
+          <Panels
+            handleModal={handleModal}
+            entries={entries}
+            handlerChange={handlerChange}
+          />
         </Grid>
       </div>
     </React.Fragment>

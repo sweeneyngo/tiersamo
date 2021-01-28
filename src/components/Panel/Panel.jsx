@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Chakra Petch",
     fontSize: "2rem",
     color: "#444",
+    "&:hover": {
+      color: "#f5af19",
+    },
+    "&:active": {
+      color: "#FFFFF0",
+    },
   },
 }));
 
@@ -62,9 +68,13 @@ const Panel = (props) => {
           </Paper>
         </div>
 
-        <Entries />
+        <Entries id={props.id} pool={props.pool} clear={props.clear} handlerChange={props.handlerChange} />
+        {JSON.stringify(props.pool)}
         <div className={cfx.options}>
-          <IconButton aria-label="delete" onClick={() => props.handleModal(props.id)}>
+          <IconButton
+            className={cfx.iconButton}
+            onClick={() => props.handleModal(props.id)}
+          >
             <Timelapse className={cfx.icon} />
           </IconButton>
         </div>

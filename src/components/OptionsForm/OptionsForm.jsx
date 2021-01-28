@@ -7,20 +7,31 @@ import GFXButton from "../GFXButton/GFXButton";
 import { showErrorOnBlur } from "mui-rff";
 
 import { Paper, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+  buttonGrid: {
+    marginTop: 16,
+  },
+}));
 const OptionsForm = (props) => {
-  // Async response to Local Storage & Backend
+  const cfx = useStyles();
+
   const onSubmit = async () => {
     await alert("Hello");
   };
 
+  const onClick = () => {
+    alert("hallo!");
+  };
+
   const validate = (values) => {
     const errors = {};
-    if (!values.username) {
-      errors.username = "Provide a valid username.";
+    if (!values.color) {
+      errors.color = "Provide a valid hex color.";
     }
-    if (!values.password) {
-      errors.password = "Provide a valid password.";
+    if (!values.label) {
+      errors.label = "Provide a valid label.";
     }
     return errors;
   };
@@ -30,8 +41,8 @@ const OptionsForm = (props) => {
       size: 12,
       field: (
         <GFXField
-          label="username"
-          name="username"
+          label="color"
+          name="color"
           margin="none"
           required={true}
           showError={showErrorOnBlur}
@@ -42,31 +53,31 @@ const OptionsForm = (props) => {
       size: 12,
       field: (
         <GFXField
-          label="pass"
-          name="password"
-          type="password"
+          label="label"
+          name="label"
           margin="none"
           required={true}
+          showError={showErrorOnBlur}
         />
       ),
     },
   ];
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      initialValues={{}}
-      validate={validate}
-      render={({ handleSubmit, form, submitting, pristine, values }) => (
-        <form onSubmit={handleSubmit} noValidate>
-          <Paper
-            elevation={3}
-            style={{
-              padding: "10rem",
-              margin: "2rem 20% 20% 20%",
-              backgroundColor: "#1F1B24",
-            }}
-          >
+    <Paper
+      elevation={3}
+      style={{
+        padding: "10rem",
+        margin: "25% 20% 20% 20%",
+        backgroundColor: "#1a1a1a",
+      }}
+    >
+      <Form
+        onSubmit={onSubmit}
+        initialValues={{}}
+        validate={validate}
+        render={({ handleSubmit, form, submitting, pristine, values }) => (
+          <form onSubmit={handleSubmit} noValidate>
             <Grid container direction="column" alignItems="center" spacing={2}>
               <Grid container alignItems="flex-end" spacing={5}>
                 {formFields.map((item, idx) => (
@@ -95,12 +106,56 @@ const OptionsForm = (props) => {
                   Submit
                 </GFXButton>
               </Grid>
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                justifyContent="flex-end"
+                spacing={5}
+                className={cfx.buttonGrid}
+              >
+                <Grid item xs={6}>
+                  <GFXButton
+                    variant="contained"
+                    color="primary"
+                    onClick={props.onErase}
+                  >
+                    Erase
+                  </GFXButton>
+                </Grid>
+                <Grid item xs={6}>
+                  <GFXButton
+                    variant="contained"
+                    color="primary"
+                    onClick={props.onClear}
+                  >
+                    Clear
+                  </GFXButton>
+                </Grid>
+                <Grid item xs={6}>
+                  <GFXButton
+                    variant="contained"
+                    color="primary"
+                    onClick={() => props.onAdd(-1)}
+                  >
+                    Above
+                  </GFXButton>
+                </Grid>
+                <Grid item xs={6}>
+                  <GFXButton
+                    variant="contained"
+                    color="primary"
+                    onClick={() => props.onAdd(1)}
+                  >
+                    Below
+                  </GFXButton>
+                </Grid>
+              </Grid>
             </Grid>
-          </Paper>
-          <pre>{JSON.stringify(values, 0, 2)}</pre>
-        </form>
-      )}
-    />
+          </form>
+        )}
+      />
+    </Paper>
   );
 };
 
