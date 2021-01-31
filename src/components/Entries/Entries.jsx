@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReactSortable } from "react-sortablejs";
 
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+
+import EntriesContext from "../../context/EntriesContext/EntriesContext";
 
 const useStyles = makeStyles((theme) => ({
   ghost: {
@@ -23,43 +25,63 @@ const useStyles = makeStyles((theme) => ({
   flexEntries: {
     width: "100%",
     flexGrow: 1,
+    // backgroundColor: "red",
+  },
+  icon: {
+    fontFamily: "Chakra Petch",
+    fontSize: "2rem",
+    color: "#444",
+    "&:hover": {
+      color: "#f5af19",
+    },
+    "&:active": {
+      color: "#FFFFF0",
+    },
+  },
+  iconDiv: {
+    display: "flex",
   },
 }));
 
 const Entries = (props) => {
   const cfx = useStyles();
-  const [pool, setPool] = useState(props.pool);
-
-  props.clear && setPool([]);
 
   return (
-    <div className={cfx.flexEntries}>
-      <ReactSortable
-        group="draggable"
-        put="true"
-        pull="true"
-        animation={100}
-        delayOnTouchStart={true}
-        delay={2}
-        list={pool}
-        ghostClass={cfx.ghost}
-        className={cfx.flexbox}
-        setList={setPool}
-        onSort={() => props.handlerChange({ pool: pool, id: props.id })}
-        emptyInsertThreshold={5}
-      >
-        {pool.map((item) => (
-          <Grid item>
-            <img
-              key={item.id}
-              src={item.src}
-              alt={item.name}
-              className={cfx.image}
-            ></img>
-          </Grid>
-        ))}
-      </ReactSortable>
-    </div>
+    <EntriesContext.Consumer>
+      {(context) => (
+        <React.Fragment>
+          <div className={cfx.flexEntries}>
+            <ReactSortable
+              group="draggable"
+              put="true"
+              pull="true"
+              animation={100}
+              delayOnTouchStart={true}
+              delay={2}
+              list={props.pool}
+              ghostClass={cfx.ghost}
+              className={cfx.flexbox}
+              setList={(newList) => context.setPool(newList, props.id)}
+              onSort={() =>
+                context.onChange({ pool: props.pool, id: props.id })
+              }
+              emptyInsertThreshold={5}
+            >
+              {props.pool.map((item) => (
+                <Grid item>
+                  <img
+                    key={item.id}
+                    src={item.src}
+                    alt={item.name}
+                    className={cfx.image}
+                  ></img>
+                </Grid>
+              ))}
+            </ReactSortable>
+          </div>
+        </React.Fragment>
+      )}
+    </EntriesContext.Consumer>
   );
 };
 

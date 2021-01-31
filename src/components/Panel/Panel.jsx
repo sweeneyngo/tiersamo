@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Entries from "../Entries/Entries";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,6 +6,7 @@ import { Grid, Paper, Typography, IconButton } from "@material-ui/core";
 
 import { Timelapse } from "@material-ui/icons";
 
+import EntriesContext from "../../context/EntriesContext/EntriesContext";
 const useStyles = makeStyles((theme) => ({
   root: {},
   paper: {
@@ -50,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
       color: "#FFFFF0",
     },
   },
+  dev: {
+    color: "white",
+    fontFamily: "Chakra Petch",
+    fontSize: "10px",
+  },
 }));
 
 const Panel = (props) => {
@@ -60,26 +66,32 @@ const Panel = (props) => {
   // const handleClose = () => setOpen(false);
 
   return (
-    <Paper className={cfx.paper}>
-      <Grid container wrap="nowrap">
-        <div className={cfx.layout}>
-          <Paper className={cfx.rank}>
-            <Typography className={cfx.rankText}>{props.name}</Typography>
-          </Paper>
-        </div>
+    <EntriesContext.Consumer>
+      {(context) => (
+        <Paper className={cfx.paper}>
+          <Grid container wrap="nowrap">
+            <div className={cfx.layout}>
+              <Paper className={cfx.rank}>
+                <Typography className={cfx.rankText}>{props.name}</Typography>
+              </Paper>
+            </div>
 
-        <Entries id={props.id} pool={props.pool} clear={props.clear} handlerChange={props.handlerChange} />
-        {JSON.stringify(props.pool)}
-        <div className={cfx.options}>
-          <IconButton
-            className={cfx.iconButton}
-            onClick={() => props.handleModal(props.id)}
-          >
-            <Timelapse className={cfx.icon} />
-          </IconButton>
-        </div>
-      </Grid>
-    </Paper>
+            <Entries id={props.id} pool={props.pool} />
+            <Typography className={cfx.dev}>
+              {JSON.stringify(props.pool)}
+            </Typography>
+            <div className={cfx.options}>
+              <IconButton
+                className={cfx.iconButton}
+                onClick={() => context.onModal(props.id)}
+              >
+                <Timelapse className={cfx.icon} />
+              </IconButton>
+            </div>
+          </Grid>
+        </Paper>
+      )}
+    </EntriesContext.Consumer>
   );
 };
 

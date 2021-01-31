@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Grid, Tabs, Tab, Typography } from "@material-ui/core";
+import { Grid, Tabs, Tab } from "@material-ui/core";
 
 // colors:
 // #360033 --> #0b8973
