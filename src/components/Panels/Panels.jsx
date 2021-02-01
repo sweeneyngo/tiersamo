@@ -26,7 +26,7 @@ const Panels = (props) => {
   return (
     <EntriesContext.Consumer>
       {(context) => (
-        <Grid container direction="column" className={cfx.test}>
+        <Grid container direction="column">
           {context.data.map((item, key) => (
             <Grid item className={cfx.layout}>
               <Panel

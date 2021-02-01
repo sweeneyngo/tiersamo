@@ -1,11 +1,14 @@
 import React from "react";
 import Panels from "../../components/Panels/Panels";
-import GFXModal from "../../components/GFXModal/GFXModal";
+import GFXModal from "../../components/GFX/GFXModal/GFXModal";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Grid, Paper, Typography, Button } from "@material-ui/core";
 
 import EntriesProvider from "../../provider/EntriesProvider/EntriesProvider";
+
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,19 +42,59 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  download: {
+    padding: "3% 20% 3% 20%",
+    borderRadius: "30px",
+    backgroundColor: "#FBDA61",
+    backgroundImage: "linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)",
+    fontFamily: "Chakra Petch",
+    backgroundSize: "200% 200%",
+    animation: `$Gradient 50000ms ${theme.transitions.easing.easeInOut}`,
+  },
+  center: { display: "flex", alignItems: "center", justifyContent: "center" },
+  "@keyframes Gradient": {
+    "0%": {
+      backgroundPosition: "0% 50%",
+    },
+    "50%": {
+      backgroundPosition: "100% 50%",
+    },
+    "100%": {
+      backgroundPosition: "0% 50%",
+    },
+  },
 }));
 
 const header = `tiersamo`;
 
 const Home = (props) => {
   const cfx = useStyles();
+  const printDocument = () => {
+    console.log("Printing!");
+    const input = document.getElementById("print");
+    try {
+      html2canvas(input, {
+        backgroundColor: "#121212",
+        scrollY: -window.scrollY,
+      }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF("p", "px", [canvas.width, canvas.height]);
+        const width = pdf.internal.pageSize.getWidth();
+        const height = pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, "JPEG", 0, 0, width, height);
+        pdf.save("download.pdf");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <EntriesProvider>
       <React.Fragment>
-        <div className={cfx.root}>
+        <div className={cfx.root} id="print">
           <GFXModal />
-
           <Grid container spacing={3}>
             <Grid container className={cfx.header} spacing={2}>
               <Paper className={cfx.hpaper}>
@@ -71,6 +114,18 @@ const Home = (props) => {
             <Panels />
           </Grid>
         </div>
+        <Paper className={cfx.hpaper}>
+          <Grid item xs={12} className={cfx.center}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={cfx.download}
+              onClick={printDocument}
+            >
+              Download
+            </Button>
+          </Grid>
+        </Paper>
       </React.Fragment>
     </EntriesProvider>
   );

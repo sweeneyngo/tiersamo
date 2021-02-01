@@ -1,8 +1,8 @@
 import React from "react";
 import { Form } from "react-final-form";
 
-import GFXField from "../../GFX/GFXField/GFXField";
-import GFXButton from "../../GFX/GFXButton/GFXButton";
+import GFXField from "../GFX/GFXField/GFXField";
+import GFXButton from "../GFX/GFXButton/GFXButton";
 
 import { showErrorOnBlur } from "mui-rff";
 
@@ -135,8 +135,7 @@ const OptionsForm = (props) => {
                       <GFXButton
                         variant="contained"
                         color="primary"
-                        onClick={context.onErase}
-                        disabled
+                        onClick={context.onClear}
                       >
                         Clear
                       </GFXButton>

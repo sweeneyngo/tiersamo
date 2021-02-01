@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #111",
   },
   rank: {
-    width: "100%",
+    width: "120px",
     height: "100%",
     padding: theme.spacing(3),
     textAlign: "center",
@@ -25,11 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
   rankText: {
     fontFamily: "Chakra Petch",
-    fontSize: "1.5rem",
-  },
-  layout: {
-    width: "100px",
-    padding: "0 10px 0 0",
+    fontSize: "1.25rem",
+    wordWrap: "break-word",
   },
   options: {
     height: "75px",
@@ -56,30 +53,29 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Chakra Petch",
     fontSize: "10px",
   },
+  center: { display: "flex", justify: "center", alignItems: "center" },
 }));
 
 const Panel = (props) => {
   const cfx = useStyles(props);
-  // const [open, setOpen] = useState(false);
-
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
 
   return (
     <EntriesContext.Consumer>
       {(context) => (
         <Paper className={cfx.paper}>
-          <Grid container wrap="nowrap">
-            <div className={cfx.layout}>
+          <Grid container wrap="nowrap" className={cfx.center}>
+            <div>
               <Paper className={cfx.rank}>
                 <Typography className={cfx.rankText}>{props.name}</Typography>
               </Paper>
             </div>
 
             <Entries id={props.id} pool={props.pool} />
-            <Typography className={cfx.dev}>
+
+            {/* <Typography className={cfx.dev}>
               {JSON.stringify(props.pool)}
-            </Typography>
+            </Typography> */}
+
             <div className={cfx.options}>
               <IconButton
                 className={cfx.iconButton}

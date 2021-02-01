@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Modal, Backdrop, Fade } from "@material-ui/core";
-import OptionsForm from "../OptionsForm/OptionsForm";
+import OptionsForm from "../../OptionsForm/OptionsForm";
 
-import EntriesContext from "../../context/EntriesContext/EntriesContext";
+import EntriesContext from "../../../context/EntriesContext/EntriesContext";
 
 const useStyles = makeStyles((theme) => ({
   modal: {

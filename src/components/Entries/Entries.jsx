@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
   image: {
     width: "75px",
     height: "75px",
-    margin: "0 2px 0 0",
+    margin: "0 2px 0 10px",
+    borderRadius: "10px",
   },
   flexbox: {
     display: "flex",
@@ -61,7 +62,7 @@ const Entries = (props) => {
               list={props.pool}
               ghostClass={cfx.ghost}
               className={cfx.flexbox}
-              setList={(newList) => context.setPool(newList, props.id)}
+              setList={(newList) => context.onChangePool(newList, props.id)}
               onSort={() =>
                 context.onChange({ pool: props.pool, id: props.id })
               }
