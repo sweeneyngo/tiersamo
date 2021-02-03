@@ -49,6 +49,17 @@ export const remove_profile = () => {
   };
 };
 
+export const add_errors = (errors) => {
+  return {
+    type: ACTION_TYPES.ADD_ERRORS,
+  };
+};
+export const add_token = (token) => {
+  return {
+    type: ACTION_TYPES.ADD_TOKEN,
+  };
+};
+
 export const user_input_change = (text) => {
   return {
     type: ACTION_TYPES.USER_INPUT_CHANGE,

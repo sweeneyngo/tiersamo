@@ -4,7 +4,7 @@
  * Boilerplate reducer for new reducer creation.
  *
  */
-import * as ACTION_TYPES from "../../actions/actionTypes/actionTypes";
+import * as ACTION_TYPES from "../../store/actions/actionTypes/actionTypes";
 
 export const initialState = {
   stateA: false,

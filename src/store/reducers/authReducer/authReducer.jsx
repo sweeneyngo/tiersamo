@@ -11,6 +11,7 @@ import * as ACTION_TYPES from "../../actions/actionTypes/actionTypes";
 export const initialState = {
   is_authenticated: false,
   profile: null,
+  token: null,
 };
 
 export const AuthReducer = (state = initialState, action) => {
@@ -35,7 +36,13 @@ export const AuthReducer = (state = initialState, action) => {
         ...state,
         profile: null,
       };
-    default:
-      return state;
+    case ACTION_TYPES.ADD_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+      };
+    default: {
+      return { ...state };
+    }
   }
 };

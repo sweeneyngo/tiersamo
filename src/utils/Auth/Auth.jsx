@@ -1,73 +1,68 @@
-import auth0 from "auth0-js";
-import History from "../History/History";
+import firebase from "../Firebase/FirebaseInit";
 
-export default class Auth {
-  auth0 = new auth0.WebAuth({
-    domain: "webapp1.auth0.com",
-    clientID: "",
-    redirectUri: "http://localhost:3000/callback",
-    responseType: "token id_token",
-    scope: "openid profile email",
-  });
-
-  userProfile = {};
-
-  login = () => {
-    this.auth0.authorize();
-  };
-
-  handleAuth = () => {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult) {
-        localStorage.setItem("access_token", authResult.accessToken);
-        localStorage.setItem("id_token", authResult.idToken);
-
-        let expiresAt = JSON.stringify(
-          authResult.expiresIn * 1000 + new Date().getTime()
-        );
-        localStorage.setItem("expiresAt", expiresAt);
-
-        this.getProfile();
-        setTimeout(() => {
-          History.replace("/authcheck");
-        }, 600);
-      } else {
-        console.log(err);
-      }
-    });
-  };
-
-  getAccessToken = () => {
-    if (localStorage.getItem("access_token")) {
-      const accessToken = localStorage.getItem("access_token");
-      return accessToken;
-    } else {
-      return null;
-    }
-  };
-
-  getProfile = () => {
-    let accessToken = this.getAccessToken();
-    if (accessToken) {
-      this.auth0.client.userInfo(accessToken, (err, profile) => {
-        if (profile) {
-          this.userProfile = { profile };
-        }
+export const Auth = {
+  signup: (
+    email,
+    password,
+    handleSetErrors,
+    handleSetProfile,
+    handleSetToken
+  ) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(async (res) => {
+        const token = await Object.entries(res.user)[5][1].b;
+        await localStorage.setItem("token", token);
+        handleSetProfile({ email: email, password: password });
+        handleSetToken(window.localStorage.token);
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+        handleSetErrors(err);
       });
-    }
-  };
-
-  logout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expiresAt");
-    setTimeout(() => {
-      History.replace("/authcheck");
-    }, 200);
-  };
-
-  isAuthenticated = () => {
-    let expiresAt = JSON.parse(localStorage.getItem("expiresAt"));
-    return new Date().getTime() < expiresAt;
-  };
-}
+  },
+  signin: (
+    email,
+    password,
+    handleSetErrors,
+    handleSetProfile,
+    handleSetToken
+  ) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(async (res) => {
+        const token = await Object.entries(res.user)[5][1].b;
+        await localStorage.setItem("token", token);
+        handleSetProfile({ email: email, password: password });
+        handleSetToken(window.localStorage.token);
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+        handleSetErrors(err);
+      });
+  },
+  signout: (handleSetErrors, handleSetProfile, handleSetToken) => {
+    firebase
+      .auth()
+      .signOut()
+      .then(async (res) => {
+        await localStorage.removeItem("token");
+        handleSetProfile({});
+        handleSetToken(null);
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+        handleSetErrors(err);
+        localStorage.removeItem("token");
+        handleSetProfile({});
+        handleSetToken(null);
+      });
+  },
+};
+// const signin = (email, password) => {};
+// const signout = (email, password) => {};

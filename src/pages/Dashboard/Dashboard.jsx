@@ -69,6 +69,7 @@ const header = `tiersamo`;
 
 const Dashboard = (props) => {
   const cfx = useStyles();
+
   const printDocument = () => {
     console.log("Printing!");
     const input = document.getElementById("print");

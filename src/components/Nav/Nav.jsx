@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import History from "../../utils/History/History";
 
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Grid, Tabs, Tab } from "@material-ui/core";
@@ -59,14 +60,21 @@ const Nav = (props) => {
     <Grid container spacing={16} className={cfx.nav}>
       <StyledTabs value={value} onChange={handleChange} aria-label="nav-tabs">
         <StyledTab label="Home">
-          <NavLink to="/">Home</NavLink>
+          <Link to="/">Home</Link>
         </StyledTab>
-        <StyledTab label="About">
-          <NavLink to="/about">About</NavLink>
+        {/* <Link to="/login">Login</Link> */}
+        {/* <StyledTab label="About">
+          <Link>About</Link>
+        </StyledTab> */}
+        {/* <StyledTab label="Login">
+          <Link to="/">Login</Link>
+        </StyledTab> */}
+        {/* <StyledTab label="Register">
+          <Link>Register</Link>
         </StyledTab>
         <StyledTab label="User">
-          <NavLink to="/user">Home</NavLink>
-        </StyledTab>
+          <Link>User</Link>
+        </StyledTab> */}
       </StyledTabs>
     </Grid>
   );

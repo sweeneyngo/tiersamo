@@ -20,6 +20,9 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ADD_PROFILE = "ADD_PROFILE";
 export const REMOVE_PROFILE = "REMOVE_PROFILE";
 
+export const ADD_ERRORS = "ADD_ERRORS";
+export const ADD_TOKEN = "ADD_TOKEN";
+
 // track changes + submit form input
 export const USER_INPUT_CHANGE = "USER_INPUT_CHANGE";
 export const USER_INPUT_SUBMIT = "USER_INPUT_SUBMIT";
