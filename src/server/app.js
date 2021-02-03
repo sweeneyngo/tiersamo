@@ -1,17 +1,17 @@
-const express = require("express");
-const app = express();
+const express = require("express"),
+  app = express();
+
+const imageRoutes = require("../api/routes/images");
+app.use("/images", imageRoutes);
+const userRoutes = require("../api/routes/users");
+app.use("/users", userRoutes);
 
 // middleware
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const dotenv = require("dotenv");
-
-const imageRoutes = require("../api/routes/images");
-const userRoutes = require("../api/routes/users");
-
-dotenv.config();
+const dotenv = require("dotenv").config();
 
 const whitelist = ["http://localhost:8000"];
 const corsOptions = (req, cb) => {
@@ -50,9 +50,6 @@ app.use(cors(corsOptions));
 //     return res.status(200).json({});
 //   }
 // });
-
-app.use("/images", imageRoutes);
-app.use("/users", userRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

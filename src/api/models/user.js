@@ -5,8 +5,10 @@ const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  name: String,
-  pass: String,
+  email: { type: String, required: true },
+  name: { type: String, required: true },
+  pass: { type: String, required: true },
+  image: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
 });
 
 module.exports = mongoose.model("User", userSchema);
